@@ -555,10 +555,6 @@ require('lazy').setup({
           --  To jump back, press <C-t>.
           map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
-          -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header.
-          map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
           map('gO', require('telescope.builtin').lsp_document_symbols, 'Open Document Symbols')
@@ -671,9 +667,10 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        dockerls = {},
+        ts_ls = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -799,12 +796,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
         opts = {},
       },
@@ -912,6 +909,11 @@ require('lazy').setup({
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
 
+      -- Split and join arguments
+      --
+      --  - gS   - [S]plit to separate lines
+      require('mini.splitjoin').setup {}
+
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
@@ -944,7 +946,26 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'diff',
+        'go',
+        'git_config',
+        'html',
+        'javascript',
+        'json',
+        'lua',
+        'luadoc',
+        'make',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'ruby',
+        'sql',
+        'vim',
+        'vimdoc',
+        'yaml',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -983,6 +1004,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+  { import = 'custom.plugins' },
 
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
