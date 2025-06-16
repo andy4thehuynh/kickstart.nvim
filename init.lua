@@ -234,7 +234,7 @@ end
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
--- [[ Configure and install plugins ]]
+-- [[ 🔎 Configure and install plugins 🔎 ]]
 --
 --  To check the current status of your plugins, run
 --    :Lazy
@@ -462,7 +462,7 @@ require('lazy').setup({
     end,
   },
 
-  -- LSP Plugins
+  -- 🌍 LSP Plugins 🌍
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
