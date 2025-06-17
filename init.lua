@@ -1038,7 +1038,14 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
-})
+}) -- end of lazy setup...
+
+-- NOTE: Add your own custom configurations as overrides of this file
+--    This is the easiest way to modularize your config.
+--
+require 'custom.config.autocmds'
+require 'custom.config.keymaps'
+require 'custom.config.options'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
